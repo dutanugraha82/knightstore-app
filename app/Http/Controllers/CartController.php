@@ -16,11 +16,11 @@ class CartController extends Controller
         
     }
 
-    public function store(Request $request, $id){
+    public function store(Request $request){
         if($request->qty == 0){
             return back()->with('error','Jumlah barang belum ditambahkan!');;
         }
-        // dd($id);
+        // dd($request->id);
         $gambar_barang_id = decrypt($request->gambar);
         $subtotal = $request->sub * $request->qty;
         Cart::create([

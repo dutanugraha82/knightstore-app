@@ -47,9 +47,9 @@ class ProductContoller extends Controller
     }
 
     public function detail($id){
-        $data =  DB::table('gambar_barang')
-                ->join('barang','barang.id','=','gambar_barang.barang_id')
-                ->where('barang_id','=', $id)
+        $data =  DB::table('barang')
+                ->where('barang.id','=', $id)
+                ->join('gambar_barang','barang.id','=','gambar_barang.barang_id')
                 ->get();
         // dd($data);
         return view('user.content.detail-product', compact('data'));

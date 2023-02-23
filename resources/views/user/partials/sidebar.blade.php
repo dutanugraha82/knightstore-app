@@ -29,9 +29,19 @@
                 </li>
                 <li> <a href="/others"><i class="bx bx-right-arrow-alt"></i>Others</a>
                 </li>
-                </li>
             </ul>
         </li>
-    </ul>
+        @auth
+        @if (auth()->user()->role == 'user')
+        <li>
+            <a href="/transaksi/{{ auth()->user()->id }}">
+                <div class="parent-icon"><i class='bx bx-cart'></i>
+                </div>
+                <div class="menu-title">Transaksi Saya</div>
+            </a>
+        </li>
+        @endif
+        @endauth
+    
     <!--end navigation-->
 </div>

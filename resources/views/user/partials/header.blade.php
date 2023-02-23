@@ -55,7 +55,11 @@
                 <a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     @if (auth()->check())
                     <div class="user-info d-flex">
-                        <img src="{{ asset('storage/public'.'/'.auth()->user()->foto) }} " class="user-img" alt="user avatar">
+                        @if (auth()->user()->foto)
+                        <img src="{{ asset('storage/public'.'/'. auth()->user()->foto) }} " class="user-img" alt="user avatar">
+                        @else
+                        <img src="{{ asset('assets/images/avatars/guest.png') }} " class="user-img" alt="user avatar">
+                        @endif
                         <p class="user-name ps-2 mb-0 d-none d-md-block">{{ auth()->user()->name }}</p>
                     </div>  
                     @else

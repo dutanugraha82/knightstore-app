@@ -216,4 +216,19 @@ class TransaksiController extends Controller
         return redirect('/');
 
     }
+
+    public function transaksiSaya($id){
+        $data = DB::table('pesanan')
+                    ->where('users_id','=',$id)
+                    ->distinct()->get(['resi','total_harga','created_at']);
+        
+        return view('user.content.transaksi', compact('data'));
+    }
+
+    public function transaksiSelesai($resi){
+        DB::table('transaksi')->where('resi','=',$resi)->update(['status'=>'selesai']);
+        DB::table('pesanan')->where('resi','=',$resi)->delete();
+
+        return back();
+    }
 }

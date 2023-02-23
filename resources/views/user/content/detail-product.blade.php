@@ -53,6 +53,7 @@
                             <input type="number" name="qty" class="form-control" id="qty" value="0">
                             <button class="btn btn-light" type="button" id="button-plus" onclick="incrementValue()"> + </button>
                             <input type="hidden" name="gambar" value="{{ encrypt($item->id) }}">
+                            <input type="hidden" id="stock" value="{{ $item->qty }}">
                             <input type="hidden" name="sub" value="{{ $item->harga }}">
                         </div>
                     </div> 
@@ -87,13 +88,10 @@
 
 @push('js')
 <script>
-    let value = parseInt(document.getElementById('qty').value, 10);
-    function incrementValue(){
-        value = isNaN(value) ? 1 : value;
-        value++;
-        document.getElementById('qty').value = value;
-        document.getElementById('qtyNow').value = value;
-    }
+    var value = parseInt(document.getElementById('qty').value, 10);
+    var stock = parseInt(document.getElementById('stock').value, 10);
+  console.log(stock);
+    
 
     function decrementValue(){
         value = isNaN(value) ? 0 : value;
@@ -103,6 +101,14 @@
         document.getElementById('qtyNow').value = value;
     }
 
+      function incrementValue(){
+        value = isNaN(value) ? 1 : value;
+        if (value < stock) {
+        value++;
+        document.getElementById('qty').value = value;
+        document.getElementById('qtyNow').value = value;
+        }   
+    }
 
 </script>
 @endpush

@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\BarangController;
 use App\Http\Controllers\Admin\PenggunaController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\TransaksiController;
+use App\Models\Transaksi;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,6 +101,8 @@ Route::group(['middleware' => ['auth','revalidate']], function(){
         Route::post('/cart/add-to-cart/{id}', [CartController::class,'store'])->name('addCart');
          Route::post('/buy-now/{id}',[TransaksiController::class,'buyNow'])->name('buyNow');
         Route::post('/checkout-now',[TransaksiController::class,'checkoutNow'])->name('checkoutNow');
+        Route::get('/transaksi/{id}',[TransaksiController::class,'transaksiSaya'])->name('transaksiSaya');
+        Route::put('/transaksi/{id}/selesai',[TransaksiController::class,'transaksiSelesai'])->name('transaksiSelesai');
     });
     // User Route End
 

@@ -20,7 +20,7 @@
                     <div class="col">
                         <div class="icon-badge position-relative bg-light me-lg-3"> 
                             <a href="{{ url('cart') }}">
-                                <i class="bx bxs-cart align-middle font-22 text-white"></i>
+                                <i class="bx bxs-cart align-middle font-20 text-white"></i>
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ \App\Models\Cart::where('user_id',auth()->user()->id)->count()}}</span>
                             </a>
                         </div>

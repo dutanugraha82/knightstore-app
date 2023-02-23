@@ -66,9 +66,12 @@
 											<div class="col-12 mt-4">
 												<input type="text" class="form-control" placeholder="masukan token OTP" name="otp">
 											</div>
+											<div class="text-center">
+												<small>Silahkan periksa email masuk pada akun email anda yang didaftarkan!</small>
+											</div>
 											<div class="col-12 mt-5">
 												<div class="d-grid">
-													<button type="submit" class="btn btn-light"><i class="bx bxs-key"></i>Verifikai</button>
+													<button type="submit" class="btn btn-light"><i class="bx bxs-key"></i>Verifikasi</button>
 												</div>
 											</div>
 										</form>

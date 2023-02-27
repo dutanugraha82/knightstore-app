@@ -2,22 +2,27 @@
 @section('content')
     <div class="container">
         <div class="card p-3">
-            @foreach ($data as $item)
             <div class="row">
                 <div class="col-md-6">
+                    @foreach ($data as $item)
+                    @if ($loop->first)
                     <p class="mb-3">Nama Pemesan : {{ $item->user->name }}</p>
                     <p class="mb-3">Tanggal Pesanan : {{ $item->created_at }}</p>
-                    <p class="mb-3">Nama Barang : {{ $item->barang->nama }}</p>
-                    <p class="mb3">No Telp : {{ $item->user->phone }}</p>
-                    <p class="mb-3">Banyak Barang : {{ $item->qty }}</p>
-                    <p class="mb-3">Alamat : {{ $item->user->alamat }}</p>
+                    <p class="mb-3">Total Harga : @currency($item->total)</p>
+                    <p class="mb3">No Telp : {{ $item->user->nohp }}</p>
+                    <p class="mb-3">Alamat : {{ $item->user->alamat }}</p> 
+                    <p class="mt-4">Barang : </p>
+                    @endif
+                    <p class="mb-3"> - {{ $item->barang->nama }} | <small>Jumlah dipesan : {{ $item->qty }} pcs</small></p>
+                    @endforeach
                 </div>
 
                 <div class="col-md-6">
                     <p class="mb-3">Bukti Transfer : </p>
                     <img class="col-5" src="{{ asset('/storage/public'.'/'.$item->bukti) }}" alt="">
+
                 </div>
-                @endforeach
+                
                 
                 <div class="mt-3">
                     @foreach ($data as $item)

@@ -124,6 +124,11 @@ class PenggunaController extends Controller
         return view('admin.content.pengguna.edit',compact('data'));
     }
 
+    public function editUser($id)
+    {
+        $user = User::find($id);
+        return view('user.content.user-profile', compact('user'));
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -133,6 +138,7 @@ class PenggunaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request);
         $request->validate([
             'name' => 'required',
             'nohp' => 'required',
@@ -166,6 +172,8 @@ class PenggunaController extends Controller
             return redirect('/superadmin/pengguna/'.$id);
         } elseif(auth()->user()->role == 'admin') {
             return redirect('/admin/pengguna/'.$id);
+        }elseif(auth()->user()->role == 'user'){
+            return redirect('/user-profile'.'/'.$id);
         }
         
         

@@ -71,7 +71,7 @@
                 <ul class="dropdown-menu dropdown-menu-end">
                     @if (auth()->check())
                     <li>
-                        <a class="dropdown-item" href="{{ route('profile') }}"><i class="bx bx-user"></i><span>Profile</span></a>  
+                        <a class="dropdown-item" href="/user-profile/{{ auth()->user()->id }}"><i class="bx bx-user"></i><span>Profile</span></a>  
                     </li>
                     <li>
                         <form action="{{ route('logout') }}" method="POST">

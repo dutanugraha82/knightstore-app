@@ -78,11 +78,8 @@ Route::group(['middleware' => ['auth','revalidate']], function(){
 
     // User Route Start
     Route::middleware(['user'])->group(function(){
-        Route::get('/user-profile', function(){
-                    return view('user.content.user-profile',[
-                        'user' => User::find(Auth::user()->id)
-                    ]);
-                })->name('profile');
+        Route::get('/user-profile/{id}', [PenggunaController::class,'editUser']);
+        Route::put('/user-profile/{id}',[PenggunaController::class,'update']);
 
         Route::get('/checkout',[TransaksiController::class,'create']);
         Route::post('/checkout',[TransaksiController::class,'store']);

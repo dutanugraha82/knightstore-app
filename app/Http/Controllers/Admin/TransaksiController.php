@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
+use App\Models\Cart;
+use App\Models\Barang;
+use App\Models\Pesanan;
 use App\Models\Transaksi;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Barang;
-use App\Models\Cart;
-use App\Models\Pesanan;
-use Carbon\Carbon;
 
 class TransaksiController extends Controller
 {
@@ -19,12 +20,12 @@ class TransaksiController extends Controller
 
     public function json(){
         // $data = Transaksi::where('status','=',null)->select('users_id')->distinct()->get();
-        $data = Transaksi::where('status','=',null)->select('users_id','bukti','total','created_at')->distinct()->get();
-
+        $data = Transaksi::where('status','=',null)->select('users_id','bukti','total','created_at','kode_transaksi')->distinct()->get();
+        // dd($data);
         return datatables()->of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($data){
-                    return  '<a href="/superadmin/transaksi/'.$data->users_id.'"class="btn btn-primary btn-sm ml-3">Detail</a>';
+                    return  '<a href="/superadmin/transaksi/'.$data->kode_transaksi.'"class="btn btn-primary btn-sm ml-3">Detail</a>';
                 })
                 ->addColumn('users', function($data){
                     return $data->user->name;
@@ -93,15 +94,17 @@ class TransaksiController extends Controller
             $data[] = $item;
         }
         
-        
+        $kode = Str::random(7);
         foreach ($data as $item) {
-            Transaksi::create([
+           Transaksi::create([
                 'users_id' => auth()->user()->id,
                 'barang_id' => $item->barang_id,
                 'total' => $total,
                 'bukti' => $request->file('bukti')->store('bukti'),
                 'qty' => $item->qty,
+                'kode_transaksi' => $kode
             ]);
+
 
             DB::table('t_barang')->insert([
                 'users_id' => auth()->user()->id,
@@ -134,8 +137,8 @@ class TransaksiController extends Controller
     
     }
 
-    public function detail($id){
-        $data = Transaksi::where('users_id','=',$id)
+    public function detail($kode_transaksi){
+        $data = Transaksi::where('kode_transaksi','=',$kode_transaksi)
                 ->get();
         // dd($data);
         return view('admin.content.transaksi.detail', compact('data'));
@@ -152,7 +155,7 @@ class TransaksiController extends Controller
             'total_harga' => $request->total
         ]);
 
-        Transaksi::where('users_id','=',$request->user)->update([
+        Transaksi::where('kode_transaksi','=',$request->kode_transaksi)->update([
             'status' => 'proses',
             'resi' => $request->resi
         ]); 
@@ -181,7 +184,7 @@ class TransaksiController extends Controller
                             ->addColumn('created_at', function($data){
                                 return Carbon::parse($data->created_at)->format('d/m/Y');
                             })
-                            ->rawColumns(['users','barang'])
+                            ->rawColumns(['users','barang','created_at'])
                             ->make(true);
     }
     
@@ -199,13 +202,15 @@ class TransaksiController extends Controller
 
         $qty = DB::table('barang')->where('id','=',$request->barang)->sum('qty');
         $updateQty = $qty - $request->qty;
-        // dd($test);
-        Transaksi::create([
+        $kode = Str::random(7);
+        // dd($kode);
+         Transaksi::create([
             'users_id' => auth()->user()->id,
             'barang_id' => $request->barang,
             'total' => decrypt($request->sub),
             'qty' => $request->qty,
-            'bukti' => $request->file('bukti')->store('bukti')
+            'bukti' => $request->file('bukti')->store('bukti'),
+            'kode_transaksi' => $kode
         ]);
 
         DB::table('barang')->where('id','=',$request->barang)

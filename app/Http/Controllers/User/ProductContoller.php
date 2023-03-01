@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\User;
 
+use Carbon\Carbon;
 use App\Models\Cart;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use App\Models\GambarBarang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ProductContoller extends Controller
 {
@@ -15,7 +17,8 @@ class ProductContoller extends Controller
         $data = DB::table('gambar_barang')
                 ->join('barang','barang.id','=','gambar_barang.barang_id')
                 ->get();
-        // dd($data);
+        // $test = Carbon::now();
+        // dd($test);
         return view('user.content.dashboard', compact('data'));
     }
 
@@ -24,7 +27,6 @@ class ProductContoller extends Controller
         ->join('barang','barang.id','=','gambar_barang.barang_id')
         ->where('kategori','=','card')
         ->get();
-
         return view('user.content.products', compact('data'));
     }
 

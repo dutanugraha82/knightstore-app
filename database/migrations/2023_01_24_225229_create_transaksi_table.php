@@ -21,6 +21,7 @@ class CreateTransaksiTable extends Migration
             $table->foreign('barang_id')->references('id')->on('barang');
             $table->enum('status',['reject','proses','success'])->nullable();
             $table->string('resi')->nullable();
+            $table->string('kode_transaksi')->nullable();
             $table->integer('total');
             $table->integer('qty');
             $table->string('bukti');

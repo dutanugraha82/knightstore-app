@@ -13,6 +13,7 @@
                         <th scope="col">Qty</th>
                         <th scope="col">Total</th>
                         <th scope="col">Resi</th>
+                        <th scope="col">Kode Transaksi</th>
                         <th scope="col">Tanggal Transaksi</th>
                     </tr>
                 </thead>
@@ -40,12 +41,13 @@
         }],
         ajax: "{{ route('superadmin.transaksi-berlangsung.json') }}",
         columns : [
-              {data: 'DT_RowIndex'},
+              {data: 'id', name: 'id'},
               {data: 'users', name: 'users'},
               {data: 'barang', name: 'barang'},
               {data: 'qty', name:'qty'},
               {data: 'total', name: 'total'},
               {data: 'resi', name: 'resi'},
+              {data: 'kode_transaksi', name: 'kode_transaksi'},
               {data: 'created_at', name: 'created_at'},
           ]
       });
@@ -71,12 +73,13 @@
         }],
         ajax: "{{ route('admin.transaksi.berlangsung.json') }}",
         columns : [
-              {data: 'DT_RowIndex'},
+              {data: 'id', name: 'id'},
               {data: 'users', name: 'users'},
               {data: 'barang', name: 'barang'},
               {data: 'qty', name:'qty'},
               {data: 'total', name: 'total'},
               {data: 'resi', name: 'resi'},
+              {data: 'kode_transaksi', name: 'kode_transaksi'},
               {data: 'created_at', name: 'created_at'},
           ]
       });

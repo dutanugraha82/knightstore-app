@@ -25,10 +25,10 @@
                 <div class="card-body">
                     <h6 class="card-title cursor-pointer">{{ $item->nama }}</h6>
                     <div class="clearfix mb-3">
-                        <p class="mb-0 float-start">Rarity : {{ $item->rarity }}</p>
-                        <p class="mb-0 float-start fw-bold">@currency($item->harga)</p>
-                            
+                        <p class="mb-0 float-start">Rarity : {{ $item->rarity }}</p><br>
+                        <p class="mb-0 float-start fw-bold">@currency($item->harga)</p>    
                     </div>
+                   
                     <small class="float-end">stok : {{ $item->qty }}</small>
                 </div>
             </div>

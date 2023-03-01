@@ -10,7 +10,7 @@ class Transaksi extends Model
     use HasFactory;
 
     protected $table = 'transaksi';
-    protected $fillable = ['users_id','barang_id','total','status','bukti','qty','created_at','updated_at'];
+    protected $fillable = ['users_id','barang_id','total','status','bukti','qty','kode_transaksi','created_at','updated_at'];
     protected $dates = ['created_at'];
 
     public function user(){

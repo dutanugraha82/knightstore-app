@@ -73,8 +73,8 @@ Route::group(['middleware' => ['auth','revalidate']], function(){
         Route::put('/transaksi/approve/{id}',[TransaksiController::class,'approve'])->name('approve');
         Route::get('/transaksi-berlangsung',[TransaksiController::class,'tBerlangsung']);
         Route::get('/transaksi-berlangsung/json',[TransaksiController::class,'pendingJson'])->name('admin.transaksi.berlangsung.json');
-        Route::get('/transaksi-selesai/json',[TransaksiController::class,'successJson'])->name('admin.transaksi.berlangsung.json');
-        Route::get('/transaksi-selesai',[TransaksiController::class,'tSelesai'])->name('admin.transaksi.selesai.json');
+        Route::get('/transaksi-selesai/json',[TransaksiController::class,'successJson'])->name('admin.transaksi.selesai.json');
+        Route::get('/transaksi-selesai',[TransaksiController::class,'tSelesai'])->name('admin.transaksi.selesai');
         Route::resource('barang', BarangController::class);
         Route::resource('pengguna',PenggunaController::class)->except(['index']);
     });

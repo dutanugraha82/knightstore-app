@@ -39,7 +39,9 @@ class TransaksiController extends Controller
 
     public function pendingJson(){
         $data = Transaksi::where('status','=','proses');
-        return datatables()->of($data)
+        
+        if (auth()->user()->role == 'superadmin') {
+            return datatables()->of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($data){
                     return  '<a href="/superadmin/transaksi/'.$data->id.'"class="btn btn-primary btn-sm ml-3">Detail</a>';
@@ -52,12 +54,29 @@ class TransaksiController extends Controller
                 })
                 ->rawColumns(['action','barang','users'])
                 ->make(true);
+
+        }  elseif(auth()->user()->role == 'admin') {
+            return datatables()->of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($data){
+                    return  '<a href="/admin/transaksi/'.$data->id.'"class="btn btn-primary btn-sm ml-3">Detail</a>';
+                })
+                ->addColumn('users', function($data){
+                    return $data->user->name;
+                })
+                ->addColumn('barang',function($data){
+                    return $data->barang->nama;
+                })
+                ->rawColumns(['action','barang','users'])
+                ->make(true);
+        }
                 
     }
 
     public function successJson(){
         $data = Transaksi::where('status','=','success')->select('users_id','bukti','total','created_at','kode_transaksi')->distinct()->get();
-        return datatables()->of($data)
+        if (auth()->user()->role == 'superadmin') {
+            return datatables()->of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($data){
                     return  '<a href="/superadmin/transaksi/'.$data->kode_transaksi.'"class="btn btn-primary btn-sm ml-3">Detail</a>';
@@ -67,6 +86,20 @@ class TransaksiController extends Controller
                 })
                 ->rawColumns(['action','users'])
                 ->make(true);
+
+        } elseif (auth()->user()->role == 'admin') {
+            return datatables()->of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($data){
+                    return  '<a href="/admin/transaksi/'.$data->kode_transaksi.'"class="btn btn-primary btn-sm ml-3">Detail</a>';
+                })
+                ->addColumn('users', function($data){
+                    return $data->user->name;
+                })
+                ->rawColumns(['action','users'])
+                ->make(true);
+        } 
+        
     }
 
     public function create(){
@@ -173,23 +206,6 @@ class TransaksiController extends Controller
         return view('admin.content.transaksi.berlangsung');
     }
 
-    public function tBerlangsungJson(){
-       $data = Transaksi::where('status','=','proses');
-
-        return datatables()->of($data)
-                            ->addIndexColumn()
-                            ->addColumn('users', function($data){
-                                return $data->user->name;
-                            })
-                            ->addColumn('barang', function($data){
-                                return $data->barang->nama;
-                            })
-                            ->addColumn('created_at', function($data){
-                                return Carbon::parse($data->created_at)->format('d/m/Y');
-                            })
-                            ->rawColumns(['users','barang','created_at'])
-                            ->make(true);
-    }
 
     public function tSelesai(){
         return view('admin.content.transaksi.selesai');

@@ -67,16 +67,14 @@
           orderable: false,
           targets:   0
         }],
-        ajax: "{{ route('admin.transaksi.berlangsung.json') }}",
+        ajax: "{{ route('admin.transaksi.selesai.json') }}",
         columns : [
-              {data: 'id', name: 'id'},
+          {data: 'DT_RowIndex'},
               {data: 'users', name: 'users'},
-              {data: 'barang', name: 'barang'},
-              {data: 'qty', name:'qty'},
               {data: 'total', name: 'total'},
-              {data: 'resi', name: 'resi'},
               {data: 'kode_transaksi', name: 'kode_transaksi'},
               {data: 'created_at', name: 'created_at'},
+              {data: 'action', name: 'action'},
           ]
       });
     });

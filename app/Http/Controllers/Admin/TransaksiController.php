@@ -38,7 +38,7 @@ class TransaksiController extends Controller
     }
 
     public function pendingJson(){
-        $data = Transaksi::where('status','=','pending');
+        $data = Transaksi::where('status','=','proses');
         return datatables()->of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($data){
@@ -52,22 +52,20 @@ class TransaksiController extends Controller
                 })
                 ->rawColumns(['action','barang','users'])
                 ->make(true);
+                
     }
 
     public function successJson(){
-        $data = Transaksi::where('status','=','success');
+        $data = Transaksi::where('status','=','success')->select('users_id','bukti','total','created_at','kode_transaksi')->distinct()->get();
         return datatables()->of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($data){
-                    return  '<a href="/superadmin/transaksi/'.$data->id.'"class="btn btn-primary btn-sm ml-3">Detail</a>';
+                    return  '<a href="/superadmin/transaksi/'.$data->kode_transaksi.'"class="btn btn-primary btn-sm ml-3">Detail</a>';
                 })
                 ->addColumn('users', function($data){
                     return $data->user->name;
                 })
-                ->addColumn('barang',function($data){
-                    return $data->barang->nama;
-                })
-                ->rawColumns(['action','barang','users'])
+                ->rawColumns(['action','users'])
                 ->make(true);
     }
 
@@ -140,8 +138,13 @@ class TransaksiController extends Controller
     public function detail($kode_transaksi){
         $data = Transaksi::where('kode_transaksi','=',$kode_transaksi)
                 ->get();
-        // dd($data);
-        return view('admin.content.transaksi.detail', compact('data'));
+        $status = [];
+        $dataStatus = DB::table('transaksi')->where('kode_transaksi','=',$kode_transaksi)->select('status')->distinct()->get('status');
+        foreach ($dataStatus as $item) {
+            $status ['status'] = $item->status; 
+        }
+        // dd($status);
+        return view('admin.content.transaksi.detail', compact('data','status'));
     }
 
     public function approve(Request $request){
@@ -187,6 +190,12 @@ class TransaksiController extends Controller
                             ->rawColumns(['users','barang','created_at'])
                             ->make(true);
     }
+
+    public function tSelesai(){
+        return view('admin.content.transaksi.selesai');
+    }
+
+    
     
       public function buyNow(Request $request, $id){
         $sql = DB::table('barang')->where('id','=',$request->id);
@@ -223,17 +232,17 @@ class TransaksiController extends Controller
     }
 
     public function transaksiSaya($id){
-        $data = DB::table('pesanan')
-                    ->where('users_id','=',$id)
-                    ->distinct()->get(['resi','total_harga','created_at']);
-        
+        $data = DB::table('barang')
+                    ->join('transaksi','barang.id','=','transaksi.barang_id')
+                    ->where('transaksi.users_id','=',$id)
+                    ->where('transaksi.status','=','proses')
+                    ->distinct()->get(['resi','total','transaksi.created_at','transaksi.qty','barang.nama','kode_transaksi']);
+                    
         return view('user.content.transaksi', compact('data'));
     }
 
-    public function transaksiSelesai($resi){
-        DB::table('transaksi')->where('resi','=',$resi)->update(['status'=>'selesai']);
-        DB::table('pesanan')->where('resi','=',$resi)->delete();
-
+    public function transaksiSelesai($kode){
+        DB::table('transaksi')->where('kode_transaksi','=',$kode)->update(['status'=>'success']);
         return back();
     }
 }

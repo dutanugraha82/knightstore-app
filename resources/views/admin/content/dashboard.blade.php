@@ -61,11 +61,9 @@
 			  </div>
 		   </div>
 		 </div>
-		 <div class="card-body">
-			<div class="container">
-				<canvas id="myChart"></canvas>
-			</div>
-		 </div>
+     <div class="p-2">
+       <canvas id="myChart"></canvas>
+     </div>
 		</div>
       <!--End Dashboard Content-->
 	  
@@ -81,26 +79,38 @@
 @endsection
 @push('js')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-	const ctx = document.getElementById('myChart');
-  
-	new Chart(ctx, {
-	  type: 'bar',
-	  data: {
-		labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-		datasets: [{
-		  label: '# of Votes',
-		  data: [12, 19, 3, 5, 2, 3],
-		  borderWidth: 1
-		}]
-	  },
-	  options: {
-		scales: {
-		  y: {
-			beginAtZero: true
-		  }
-		}
-	  }
-	});
-  </script>
+<script type="text/javascript">
+  const ctx = document.getElementById('myChart');
+  var jan = {{ Js::from($jan) }}
+  var feb = {{ Js::from($feb) }}
+  var mar = {{ Js::from($mar) }}
+  var apr = {{ Js::from($apr) }}
+  var may = {{ Js::from($may) }}
+  var june = {{ Js::from($june) }}
+  var july = {{ Js::from($july) }}
+  var aug = {{ Js::from($aug) }}
+  var sept = {{ Js::from($sept) }}
+  var oct = {{ Js::from($oct) }}
+  var nov = {{ Js::from($nov) }}
+  var dec = {{ Js::from($dec) }}
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['jan','feb','mar','apr','may','june','july','aug','sept','oct','nov','dec'],
+      datasets: [{
+        label: 'Total Uang masuk Tahun Ini',
+        data: [jan,feb,mar,apr,may,june,july,aug,sept,oct,nov,dec],
+        backgroundColor: '#4B49AC',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
 @endpush

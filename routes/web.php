@@ -50,7 +50,9 @@ Route::group(['middleware' => ['auth','revalidate']], function(){
         Route::get('/transaksi/{id}',[TransaksiController::class,'detail']);
         Route::put('/transaksi/approve/{id}',[TransaksiController::class,'approve'])->name('approve');
         Route::get('/transaksi-berlangsung',[TransaksiController::class,'tBerlangsung']);
-        Route::get('/transaksi-berlangsung/json',[TransaksiController::class,'tBerlangsungJson'])->name('transaksi-berlangsung.json');
+        Route::get('/transaksi-berlangsung/json',[TransaksiController::class,'pendingJson'])->name('transaksi-berlangsung.json');
+        Route::get('/transaksi-selesai/json',[TransaksiController::class,'successJson'])->name('transaksi-selesai.json');
+        Route::get('/transaksi-selesai',[TransaksiController::class,'tSelesai'])->name('transaksi-selesai');
         Route::resource('barang', BarangController::class);
         Route::resource('pengguna',PenggunaController::class);
         Route::resource('pesan', PesanController::class);
@@ -63,14 +65,16 @@ Route::group(['middleware' => ['auth','revalidate']], function(){
         Route::get('/barang/{id}/img', [BarangController::class,'editGambar']);
         Route::put('/barang/{id}/img-update',[BarangController::class,'updateGambar']);
         Route::delete('/barang/{id}/img',[BarangController::class,'destroyGambar']);
-        Route::get('/barang/json',[BarangController::class,'json'])->name('admin.barang.json'); //<< BUG penyebab datatable barang error
+        Route::get('/barang/json',[BarangController::class,'json'])->name('admin.barang.json');
         Route::get('/pengguna/{id}/akun',[PenggunaController::class,'userShow']);
         Route::get('/transaksi/json',[TransaksiController::class,'json'])->name('admin.transaksi.json');
         Route::get('/transaksi',[TransaksiController::class,'index']);
         Route::get('/transaksi/{id}',[TransaksiController::class,'detail']);
         Route::put('/transaksi/approve/{id}',[TransaksiController::class,'approve'])->name('approve');
         Route::get('/transaksi-berlangsung',[TransaksiController::class,'tBerlangsung']);
-        Route::get('/transaksi-berlangsung/json',[TransaksiController::class,'tBerlangsungJson'])->name('admin.transaksi.berlangsung.json');
+        Route::get('/transaksi-berlangsung/json',[TransaksiController::class,'pendingJson'])->name('admin.transaksi.berlangsung.json');
+        Route::get('/transaksi-selesai/json',[TransaksiController::class,'successJson'])->name('admin.transaksi.berlangsung.json');
+        Route::get('/transaksi-selesai',[TransaksiController::class,'tSelesai'])->name('admin.transaksi.selesai.json');
         Route::resource('barang', BarangController::class);
         Route::resource('pengguna',PenggunaController::class)->except(['index']);
     });

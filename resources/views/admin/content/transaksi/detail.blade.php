@@ -24,7 +24,8 @@
 
                 </div>
                 
-                
+                @if ($status['status'] != 'success')
+                    
                 <div class="mt-3">
                     @foreach ($data as $item)
                     <form action="/superadmin/transaksi/approve/{{ $item->kode_transaksi }}" method="POST">
@@ -47,15 +48,15 @@
                             <button type="submit" class=" ms-3 btn btn-danger" onclick="return confirm('Yakin Ingin Menolak Transaksi Ini?')">Tolak Transaksi</button>
                             </form>
                         </div>
-                            @if (auth()->user()->role == 'superadmin')
-                            <a class="btn btn-warning mt-4" href="/superadmin/transaksi">Kembali</a>
-                            @elseif(auth()->user()->role == 'admin')
-                            <a class="btn btn-warning mt-4" href="/admin/transaksi">Kembali</a>
-                            @endif
-                            
+                    @endif
+                    
                 </div>
-            </div>
-            <hr>
+                <hr>
+                @if (auth()->user()->role == 'superadmin')
+                <a class="btn btn-warning mt-4" style="width:200px" href="/superadmin/transaksi">Kembali</a>
+                @elseif(auth()->user()->role == 'admin')
+                <a class="btn btn-warning mt-4" style="width:200px" href="/admin/transaksi">Kembali</a>
+                @endif
         </div>
     </div>
 @endsection

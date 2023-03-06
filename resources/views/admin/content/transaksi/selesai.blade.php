@@ -7,11 +7,12 @@
             <table id="table-transaksi" class="table table-hover table-striped" style="width: 100%;">
                 <thead>
                     <tr>
-                      <th></th>
+                        <th scope="col">No</th>
                         <th scope="col">Pembeli</th>
                         <th scope="col">Total</th>
                         <th scope="col">Kode Transaksi</th>
                         <th scope="col">Tanggal Transaksi</th>
+                        <th scope="col">Aksi</th>
                     </tr>
                 </thead>
             </table>
@@ -36,13 +37,14 @@
           orderable: false,
           targets:   0
         }],
-        ajax: "{{ route('superadmin.transaksi-berlangsung.json') }}",
+        ajax: "{{ route('superadmin.transaksi-selesai.json') }}",
         columns : [
-              {data:'DT_RowIndex'},
+              {data: 'DT_RowIndex'},
               {data: 'users', name: 'users'},
               {data: 'total', name: 'total'},
               {data: 'kode_transaksi', name: 'kode_transaksi'},
               {data: 'created_at', name: 'created_at'},
+              {data: 'action', name: 'action'},
           ]
       });
     });

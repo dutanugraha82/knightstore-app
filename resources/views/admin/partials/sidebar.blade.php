@@ -35,7 +35,7 @@
                 </li>
                 <li> <a href="/superadmin/transaksi-berlangsung"><i class="bx bx-right-arrow-alt"></i>Transaksi Berlangsung</a>
                 </li>
-                <li> <a href="ecommerce-add-new-products.html"><i class="bx bx-right-arrow-alt"></i>Tansaksi Selesai</a>
+                <li> <a href="/superadmin/transaksi-selesai"><i class="bx bx-right-arrow-alt"></i>Tansaksi Selesai</a>
                 </li>
                 </li>
             </ul>

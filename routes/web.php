@@ -121,6 +121,10 @@ Route::get('/otp/{email}', [RegisterController::class, 'otp'])->name('otp')->mid
 Route::post('/otp/{token}', [RegisterController::class, 'otp_store'])->name('otp_store')->middleware('guest');
 
 Route::get('/login',[LoginController::class,'login'])->name('login')->middleware('guest');
+Route::get('/forgot-password',[LoginController::class,'forgotPassword'])->name('forgotPassword')->middleware('guest');
+Route::post('/forgot-password',[LoginController::class,'requestResetPassword'])->name('requestResetPassword')->middleware('guest');
+Route::get('/reset-password/{token}',[LoginController::class,'resetPassword'])->name('password.reset')->middleware('guest');
+Route::post('/reset-password',[LoginController::class,'resetingPassword'])->name('resetingPassword')->middleware('guest');
 
 Route::get('/', [ProductContoller::class,'index'])->name('product');
 Route::get('/detail-product/{id}', [ProductContoller::class,'detail'])->name('detail-product');

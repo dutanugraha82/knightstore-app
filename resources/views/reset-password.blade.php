@@ -19,7 +19,7 @@
 		<link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet">
     {{-- Box Icon --}}
 	  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-		<title>Knight Store - Login</title>
+		<title>Knight Store - Password Reset</title>
 	</head>
 
 <body class="bg-theme bg-dark">
@@ -29,45 +29,10 @@
 			<div class="container-fluid">
 				<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
 					<div class="col mx-auto">
-						@if(Session::has('success'))
-						<div class="alert alert-outline-white shadow-sm alert-dismissible fade show py-2 mb-4">
-							<div class="d-flex align-items-center">
-								<div class="font-35 text-white"><i class="bx bxs-check-circle"></i>
-								</div>
-								<div class="ms-3">
-									<h6 class="mb-0 text-white">Sukses!</h6>
-									<div>{{ Session::get('success') }}</div>
-								</div>
-							</div>
-							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-						</div>
-						@elseif(Session::has('error'))
-						<div class="alert alert-outline-white shadow-sm alert-dismissible fade show py-2 mb-4">
-							<div class="d-flex align-items-center">
-								<div class="font-35 text-white"><i class="bx bxs-message-square-x"></i>
-								</div>
-								<div class="ms-3">
-									<h6 class="mb-0 text-white">Error!</h6>
-									<div>{{ Session::get('error') }}</div>
-								</div>
-							</div>
-							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-						</div>
-						@endif
 						<div class="card">
 							<div class="card-body">
 								<div class="border p-4 rounded">
-									<div class="text-center">
-										<h3 class="">Login</h3>
-										<p>Belum punya akun ? <a href="{{ route('register') }}">Daftar</a>
-										</p>
-									</div>
-
-									<div class="login-separater text-center mb-4"> <span>Login dengan Email</span>
-										<hr/>
-									</div>
-									<div class="form-body">
-										<form action="/authenticating" class="row g-3" method="POST">
+										<form action="{{ route('resetingPassword') }}" class="row g-3" method="POST">
 											@csrf
 											<div class="col-12">
 												<label for="email" class="form-label">Email</label>
@@ -76,18 +41,20 @@
 											<div class="col-12">
 												<label for="password" class="form-label">Password</label>
 												<div class="input-group" id="show_hide_password">
-													<input type="password" name="password" class="form-control border-end-0" id="password" placeholder="Password"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
-												</div>
-												<div class="contianer mt-3 text-decoration-underline">
-													<a href="{{ route('forgotPassword') }}">Forgot Password? <small>(click here)</small></a>
+													<input type="password" name="password" class="form-control border-end-0" placeholder="Password">
 												</div>
 											</div>
-											{{-- <div class="col-md-12 text-end">
-												<a href="authentication-forgot-password.html">Forgot Password ?</a>
-											</div> --}}
+											<div class="col-12">
+												<label for="password" class="form-label">Confirmation Password</label>
+												<div class="input-group" id="show_hide_password">
+													<input type="password" name="password_confirmation" class="form-control border-end-0" id="password" placeholder="Harus sesuai dengan form password"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                                    <small class="mt-3">Klik logo pada sebelah form password untuk melihat password anda</small>
+												</div>
+                                                <input type="hidden" name="token" value="{{ $token }}">
+											</div>
 											<div class="col-12 mt-5">
 												<div class="d-grid">
-													<button type="submit" class="btn btn-light"><i class="bx bxs-lock-open"></i>Login</button>
+													<button type="submit" class="btn btn-light"><i class="bx bxs-lock-open"></i>Reset Password</button>
 												</div>
 											</div>
 										</form>
